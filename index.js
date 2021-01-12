@@ -10,7 +10,8 @@ document.body.appendChild(button);
 
 const main = async () => {
 	try {
-		const userInfo = await fetchUserInfo("candy12t");
+		const userId = getUserId();
+		const userInfo = await fetchUserInfo(userId);
 		const view = createView(userInfo);
 		displayView(view);
 	} catch(error) {
@@ -28,6 +29,8 @@ const fetchUserInfo = userId => {
 			}
 		});
 };
+
+const getUserId = () => document.getElementById("userId").value;
 
 const createView = userInfo => {
 	return escapeHTML`
