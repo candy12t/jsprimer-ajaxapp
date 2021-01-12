@@ -10,6 +10,8 @@ document.body.appendChild(button);
 
 const main = () => {
 	fetchUserInfo("candy12t")
+		.then(userInfo => createView(userInfo))
+		.then(view => displayView(view))
 		.catch(error => {
 			console.error(`error! (${error})`);
 		});
@@ -21,10 +23,7 @@ const fetchUserInfo = userId => {
 			if(!response.ok) {
 				return Promise.reject(new Error(`${response.status}: ${response.statusText}`));
 			} else {
-				return response.json().then(userInfo => {
-					const view = createView(userInfo);
-					displayView(view);
-				});
+				return response.json()
 			}
 		});
 };
