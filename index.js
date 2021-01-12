@@ -8,13 +8,14 @@ const button = document.createElement("button");
 button.textContent = "Push Me";
 document.body.appendChild(button);
 
-const main = () => {
-	fetchUserInfo("candy12t")
-		.then(userInfo => createView(userInfo))
-		.then(view => displayView(view))
-		.catch(error => {
-			console.error(`error! (${error})`);
-		});
+const main = async () => {
+	try {
+		const userInfo = await fetchUserInfo("candy12t");
+		const view = createView(userInfo);
+		displayView(view);
+	} catch(error) {
+		console.error(`error! (${error})`);
+	}
 };
 
 const fetchUserInfo = userId => {
@@ -65,20 +66,3 @@ const escapeHTML = (strings, ...values) => {
 		}
 	});
 };
-
-
-// const fetchUserInfo = userId => {
-// 	fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
-// 		.then(response => {
-// 			console.log(response.status);
-// 			if(!response.ok) {
-// 				console.error("error response", response);
-// 			} else {
-// 				return response.json();
-// 			}
-// 		})
-// 		.then(userInfo => console.log(userInfo))
-// 		.catch(error => {
-// 			console.error(error);
-// 		});
-// };
