@@ -9,22 +9,23 @@ button.textContent = "Push Me";
 document.body.appendChild(button);
 
 const main = () => {
-	fetchUserInfo("candy12t");
+	fetchUserInfo("candy12t")
+		.catch(error => {
+			console.error(`error! (${error})`);
+		});
 };
 
 const fetchUserInfo = userId => {
-	fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
+	return fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
 		.then(response => {
 			if(!response.ok) {
-				console.error("error response", response);
+				return Promise.reject(new Error(`${response.status}: ${response.statusText}`));
 			} else {
 				return response.json().then(userInfo => {
 					const view = createView(userInfo);
 					displayView(view);
 				});
 			}
-		}).catch(error => {
-			console.error(error);
 		});
 };
 
